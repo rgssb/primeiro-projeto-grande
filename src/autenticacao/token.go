@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -37,6 +38,20 @@ func ValidarToken(r *http.Request) error {
 
 			return errors.New("Ixi Token invalido")
 }
+
+//ExtrarirUsuarioID retorna o usuario que esta salvo no token
+func ExtrairUsuarioID(r *http.Request) (uint64, error) {
+	tokenString := extrairTokens(r)
+	token, erro := jwt.Parse(tokenString, retornarChaveDeVerificacao)
+		if erro != nil {
+			return 0, erro
+		}
+
+		if permissoes, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+			usuarioID, erro := strconv.ParseUint(permissoes["usuarioId"], 10, 64)
+		}
+}
+
 
 func extrairTokens(r *http.Request) string {
 	token := r.Header.Get("Authorization")

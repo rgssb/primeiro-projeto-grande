@@ -43,13 +43,19 @@ func ValidarToken(r *http.Request) error {
 func ExtrairUsuarioID(r *http.Request) (uint64, error) {
 	tokenString := extrairTokens(r)
 	token, erro := jwt.Parse(tokenString, retornarChaveDeVerificacao)
+	if erro != nil {
+		return 0, erro
+	}
+
+	if permissoes, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		usuarioID, erro := strconv.ParseUint(fmt.Sprintf("%.f", permissoes["usuarioID"]), 10, 64)
 		if erro != nil {
 			return 0, erro
 		}
+		return usuarioID, nil
+	}
 
-		if permissoes, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-			usuarioID, erro := strconv.ParseUint(permissoes["usuarioId"], 10, 64)
-		}
+	return 0, errors.New("Token invalido")
 }
 
 

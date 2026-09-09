@@ -11,6 +11,10 @@ type usuarios struct {
 	db *sql.DB
 }
 
+func (repositorio *usuarios) PararDeSeguir(param any, seguidorID uint64) error {
+	panic("unimplemented")
+}
+
 func (repositorio *usuarios) Seguir(usuarioID uint64, seguidorID uint64) error {
 	panic("unimplemented")
 }

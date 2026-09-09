@@ -11,6 +11,10 @@ type usuarios struct {
 	db *sql.DB
 }
 
+func (repositorio *usuarios) Seguir(usuarioID uint64, seguidorID uint64) error {
+	panic("unimplemented")
+}
+
 // NovoRepositorioDeUsuarios cria um repositorio de usuarios
 func NovoRepositorioDeUsuarios(db *sql.DB) *usuarios {
 	return &usuarios{db}

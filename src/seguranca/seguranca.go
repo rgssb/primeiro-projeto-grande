@@ -2,11 +2,10 @@ package seguranca
 
 import "golang.org/x/crypto/bcrypt"
 
-//Hash recebe uma string e coloca um hash na mesma
+// Hash recebe uma string e coloca um hash na mesma
 func Hash(senha string) ([]byte, error) {
 	return bcrypt.GenerateFromPassword([]byte(senha), bcrypt.DefaultCost)
 }
-
 
 func VerificarSenha(senhaComHash, senhaStringh string) error {
 	return bcrypt.CompareHashAndPassword([]byte(senhaComHash), []byte(senhaStringh))

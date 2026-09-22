@@ -3,7 +3,6 @@ package rotas
 import (
 	"API/src/middlewares"
 	"net/http"
-
 	"github.com/gorilla/mux"
 )
 
@@ -19,6 +18,7 @@ type Rota struct {
 func Congigurar(r *mux.Router) *mux.Router {
 	rotas := rotasUsuarios
 	rotas = append(rotas, rotalogin)
+	rotas = append(rotas, rotasPublicacoes...)
 
 	for _, rota := range rotas {
 		if rota.RequerAutenticacao {

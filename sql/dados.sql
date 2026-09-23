@@ -10,7 +10,8 @@ values
 (3, 1),
 (1, 3);
 
-INSERT INTO publicacoes (titulo, conteudo, autor_id)
+insert into publicacoes(titulo, conteudo, autor_id)
 values
-("Minha primeira publicação", "Olá Mundo! Minha primeira publicação!", 1),
-("Minha segunda publicação", "Olá Mundo! Minha segunda publicação!", 2);
+("Publicação do Usuaro 1", "Essa é a publicação do usuario 1, Iupi!!!", 1),
+("Publicação do Usuaro 2", "Essa é a publicação do usuario 2, Iupi!!!", 2),
+("Publicação do Usuaro 3", "Essa é a publicação do usuario 3, Iupi!!!", 3);

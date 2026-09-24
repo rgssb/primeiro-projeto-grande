@@ -154,9 +154,29 @@ func AtualizarPublicacoa(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	corpoRequisicao, erro := ioutil.ReadAll(r.Body)
+	if erro != nil {
+		respostas.Erro(w, http.StatusUnprocessableEntity, erro)
+		return
+	}
 
+	var publicacao modelos.Publicacao
+	if erro = json.Unmarshal(corpoRequisicao, &publicacao); erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
 
+	if erro = publicacao.Preparar(); erro != nil {
+		respostas.Erro(w, http.StatusBadRequest, erro)
+		return
+	}
 
+	if erro = repositorio.Atualizar(publicacaoID, publicacao); erro != nil {
+		respostas.Erro(w, http.StatusInternalServerError, erro)
+		return
+	}
+
+	respostas.JSON(w, http.StatusNoContent, nil)
 }
 
 // DeletarPublicacao exclui os dados de uma publicacao

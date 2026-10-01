@@ -13,6 +13,8 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/go-sql-driver/mysql"
 	"github.com/gorilla/mux"
 )
 
@@ -45,6 +47,12 @@ func CriarUsuario(w http.ResponseWriter, r *http.Request) {
 	repositorio := repositorios.NovoRepositorioDeUsuarios(db)
 	usuario.ID, erro = repositorio.Criar(usuario)
 	if erro != nil {
+		var erroMySQL *mysql.MySQLError
+		if errors.As(erro, &erroMySQL) && erroMySQL.Number == 1062 {
+			respostas.Erro(w, http.StatusConflict, errors.New("Nick ou e-mail já cadastrado"))
+			return
+		}
+
 		respostas.Erro(w, http.StatusInternalServerError, erro)
 		return
 	}
